@@ -93,6 +93,7 @@ st.write("""
 Aplikasi ini dibuat sebagai implementasi hasil penelitian skripsi:
 
 **NAMA : IKHSAN MADINA TUFASAH**
+
 **NIM  : 2230511027**
 
 **Prediksi Harga Daging Sapi di Kota Sukabumi
