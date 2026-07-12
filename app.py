@@ -91,7 +91,8 @@ st.header("Tentang Aplikasi")
 
 st.write("""
 Aplikasi ini dibuat sebagai implementasi hasil penelitian skripsi:
-
+Nama : Ikhsan Madina Tufasah
+Nim  : 2230511027
 **Prediksi Harga Daging Sapi di Kota Sukabumi
 Menggunakan Algoritma Multiple Linear Regression**
 
@@ -107,4 +108,4 @@ Seluruh proses mengikuti tahapan:
 Silakan gunakan menu di sebelah kiri untuk melihat setiap tahapan penelitian.
 """)
 
-st.info("➡️ Mulai dari menu Business Understanding pada sidebar.")
+st.info("➡️ Mulai dari menu Business Understanding pada sidebar."
