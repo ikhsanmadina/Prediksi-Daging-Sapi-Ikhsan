@@ -91,8 +91,10 @@ st.header("Tentang Aplikasi")
 
 st.write("""
 Aplikasi ini dibuat sebagai implementasi hasil penelitian skripsi:
-Nama : Ikhsan Madina Tufasah
-Nim  : 2230511027
+
+**NAMA : IKHSAN MADINA TUFASAH**
+**NIM  : 2230511027**
+
 **Prediksi Harga Daging Sapi di Kota Sukabumi
 Menggunakan Algoritma Multiple Linear Regression**
 
