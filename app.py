@@ -108,4 +108,4 @@ Seluruh proses mengikuti tahapan:
 Silakan gunakan menu di sebelah kiri untuk melihat setiap tahapan penelitian.
 """)
 
-st.info("➡️ Mulai dari menu Business Understanding pada sidebar."
+st.info("➡️ Mulai dari menu Business Understanding pada sidebar.")
