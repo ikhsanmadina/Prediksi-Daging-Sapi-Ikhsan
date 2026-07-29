@@ -24,16 +24,77 @@ memasuki proses **Data Preparation**.
 st.divider()
 
 # ==========================
-# LOAD DATA
+# KELOLA DATASET
 # ==========================
 
-df = pd.read_excel("data/dataset_daging_sapi_2021_2025.xlsx")
+DEFAULT_PATH = "data/dataset_daging_sapi_2021_2025.xlsx"
+
+if "dataset" not in st.session_state:
+    st.session_state["dataset"] = pd.read_excel(DEFAULT_PATH)
+    st.session_state["nama_file"] = "dataset_daging_sapi_2021_2025.xlsx"
+
+st.subheader("📂 Kelola Dataset")
+
+uploaded_file = st.file_uploader(
+    "Upload Dataset (.xlsx)",
+    type=["xlsx"]
+)
+
+if uploaded_file is not None:
+    st.session_state["dataset"] = pd.read_excel(uploaded_file)
+    st.session_state["nama_file"] = uploaded_file.name
+    st.success(f"✅ Dataset **{uploaded_file.name}** berhasil diupload.")
+
+df = st.session_state["dataset"].copy()
+
+df["Tanggal"] = pd.to_datetime(df["Tanggal"])
+
+col1, col2, col3 = st.columns(3)
+
+col1.metric("📄 Nama File", st.session_state["nama_file"])
+col2.metric("📊 Jumlah Baris", len(df))
+col3.metric("📋 Jumlah Kolom", len(df.columns))
+
+st.divider()
+
+kolom_wajib = [
+    "Tanggal",
+    "Harga",
+    "Lag_1",
+    "Lag_2",
+    "Indikator_Lebaran",
+    "Indeks_Pakan"
+]
+
+kolom_tidak_ada = [
+    k for k in kolom_wajib if k not in df.columns
+]
+
+if kolom_tidak_ada:
+    st.error(f"Kolom berikut belum tersedia: {kolom_tidak_ada}")
+    st.stop()
+
+df["Tanggal"] = pd.to_datetime(df["Tanggal"])
+
+st.subheader("✏️ Edit Dataset")
+
+
+
+col1, col2, col3 = st.columns(3)
+
+col1.metric("📄 Nama File", st.session_state["nama_file"])
+col2.metric("📊 Jumlah Baris", len(df))
+col3.metric("📋 Jumlah Kolom", len(df.columns))
+
+# ==========================
+# PENGECEKAN MISSING VALUE
+# ==========================
+
 st.subheader("Pengecekan Missing Value")
 
 st.write(df.isnull().sum())
 
 st.write(df[df.isnull().any(axis=1)])
-df["Tanggal"] = pd.to_datetime(df["Tanggal"])
 
 # ==========================
 # KPI
@@ -45,9 +106,12 @@ harga_min = df["Harga"].min()
 
 c1,c2,c3,c4 = st.columns(4)
 
+periode_awal = df["Tanggal"].dt.year.min()
+periode_akhir = df["Tanggal"].dt.year.max()
+
 c1.metric(
     "📅 Periode",
-    "2021-2025"
+    f"{periode_awal}-{periode_akhir}"
 )
 
 c2.metric(

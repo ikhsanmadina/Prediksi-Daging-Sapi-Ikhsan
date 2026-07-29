@@ -53,7 +53,7 @@ with col1:
     step=100,
     format="%d"
 )
-    
+
 with col2:
     indeks = st.number_input(
         "Indeks Pakan",

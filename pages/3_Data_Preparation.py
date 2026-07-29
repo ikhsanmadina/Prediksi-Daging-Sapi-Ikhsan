@@ -21,7 +21,10 @@ st.divider()
 # LOAD DATA
 # ====================================
 
-df = pd.read_excel("data/dataset_daging_sapi_2021_2025.xlsx")
+if "dataset" in st.session_state:
+    df = st.session_state["dataset"].copy()
+else:
+    df = pd.read_excel("data/dataset_daging_sapi_2021_2025.xlsx")
 
 df["Tanggal"] = pd.to_datetime(df["Tanggal"])
 
@@ -85,7 +88,7 @@ st.plotly_chart(
 )
 
 st.divider()
-
+jumlah_missing = int(df.isnull().sum().sum())
 # ====================================
 # PREPROCESSING
 # ====================================
@@ -101,6 +104,7 @@ Tahapan preprocessing yang dilakukan meliputi:
 """)
 
 df_clean = df.dropna().copy()
+st.session_state["dataset_clean"] = df_clean
 
 st.success("✅ Missing Value berhasil dihapus menggunakan dropna().")
 
@@ -221,9 +225,9 @@ st.success(f"""
 
 ✅ Dataset setelah preprocessing : **{len(df_clean)}** data
 
-✅ Missing Value sebelum preprocessing : **3**
+✅ Missing Value sebelum preprocessing : **{jumlah_missing}**
 
-✅ Missing Value setelah preprocessing : **0**
+✅ Missing Value setelah preprocessing : **{int(df_clean.isnull().sum().sum())}**
 
 Dataset telah siap digunakan pada tahap **Modeling** menggunakan
 algoritma **Multiple Linear Regression**.
