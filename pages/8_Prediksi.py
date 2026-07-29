@@ -40,14 +40,14 @@ with col1:
     lag1 = st.number_input(
         "Harga Hari Sebelumnya (Lag_1)",
         min_value=0.0,
-        value=120000,
+        value=120000.0,
         step=100.0
     )
 
     lag2 = st.number_input(
         "Harga Dua Hari Sebelumnya (Lag_2)",
         min_value=0.0,
-        value=120000,
+        value=120000.0,
         step=100.0
     )
 
