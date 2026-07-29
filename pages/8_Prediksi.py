@@ -1,7 +1,8 @@
 import streamlit as st
 import pandas as pd
 import joblib
-
+def format_persen(nilai):
+    return f"{nilai:.2f}".rstrip("0").rstrip(".").replace(".", ",")
 st.set_page_config(
     page_title="Prediksi Harga",
     page_icon="💰",
@@ -38,19 +39,21 @@ col1, col2 = st.columns(2)
 
 with col1:
     lag1 = st.number_input(
-        "Harga Hari Sebelumnya (Lag_1)",
-        min_value=0.0,
-        value=120000.0,
-        step=100.0
-    )
+    "Harga Hari Sebelumnya (Lag_1)",
+    min_value=0,
+    value=120000,
+    step=100,
+    format="%d"
+)
 
     lag2 = st.number_input(
-        "Harga Dua Hari Sebelumnya (Lag_2)",
-        min_value=0.0,
-        value=120000.0,
-        step=100.0
-    )
-
+    "Harga Dua Hari Sebelumnya (Lag_2)",
+    min_value=0,
+    value=120000,
+    step=100,
+    format="%d"
+)
+    
 with col2:
     indeks = st.number_input(
         "Indeks Pakan",
@@ -92,16 +95,16 @@ if st.button("🔍 Prediksi Harga", use_container_width=True):
 
     with c1:
         st.metric(
-            label="💰 Prediksi Harga",
-            value=f"Rp {hasil:,.2f}",
-            delta=f"{selisih:,.2f}"
-        )
+    label="💰 Prediksi Harga",
+    value=f"Rp {hasil:,.0f}".replace(",", "."),
+    delta=f"{selisih:,.0f}".replace(",", ".")
+)
 
     with c2:
         st.metric(
-            label="📊 Persentase Perubahan",
-            value=f"{persentase:.2f}%"
-        )
+    label="📊 Persentase Perubahan",
+    value=f"{format_persen(persentase)}%"
+)
 
     st.divider()
 
@@ -118,7 +121,7 @@ Harga daging sapi diperkirakan **NAIK**
 dibandingkan harga hari sebelumnya.
 
 - Kenaikan Harga : **Rp {selisih:,.2f}**
-- Persentase Kenaikan : **{persentase:.2f}%**
+- Persentase Kenaikan : **{format_persen(persentase)}%**
 """)
 
     elif hasil < lag1:
@@ -130,7 +133,7 @@ Harga daging sapi diperkirakan **TURUN**
 dibandingkan harga hari sebelumnya.
 
 - Penurunan Harga : **Rp {abs(selisih):,.2f}**
-- Persentase Penurunan : **{abs(persentase):.2f}%**
+- Persentase Penurunan : **{format_persen(abs(persentase))}%**
 """)
 
     else:
